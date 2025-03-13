@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:meditation_friend_app/common/utils/app_routes.dart';
 import 'package:meditation_friend_app/common/utils/environment.dart';
 import 'package:meditation_friend_app/common/utils/kstrings.dart';
@@ -10,6 +11,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // env 파일을 돌려줌
   await dotenv.load(fileName: Environment.fileName);
+
+  // 로컬 스토리지에 접근
+  GetStorage.init();
 
   runApp(const MyApp());
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditation_friend_app/src/onboarding/views/onboarding_page.dart';
 import 'package:meditation_friend_app/src/splashscreen/views/splashscreen_page.dart';
 
 import '../../src/entrypoint/views/entrypoint.dart';
@@ -12,10 +13,10 @@ final GoRouter _router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
     GoRoute(path: '/home', builder: (context, state) => const AppEntryPoint()),
-    // GoRoute(
-    //   path: '/onboarding',
-    //   builder: (context, state) => const OnBoardingScreen(),
-    // ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (context, state) => const OnboardingScreen(),
+    ),
     // GoRoute(
     //   path: '/review',
     //   builder: (context, state) => const ReviewsPage(),

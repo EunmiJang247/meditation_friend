@@ -1,4 +1,5 @@
 import 'package:get_storage/get_storage.dart';
+// 로컬 스토리지 접근
 
 class Storage {
   void clear() {
@@ -7,7 +8,6 @@ class Storage {
 
   void setString(String key, String value) {
     GetStorage().write(key, value);
-    
   }
 
   String? getString(String key) {
@@ -22,7 +22,7 @@ class Storage {
     return GetStorage().read(key);
   }
 
-   Future<void> removeKey(String key) {
+  Future<void> removeKey(String key) {
     return GetStorage().remove(key);
   }
 }
