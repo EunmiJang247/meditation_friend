@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meditation_friend_app/src/onboarding/views/onboarding_page.dart';
+import 'package:meditation_friend_app/src/auth/views/login_screen.dart';
+import 'package:meditation_friend_app/src/onboarding/views/onboarding_screen.dart';
 import 'package:meditation_friend_app/src/splashscreen/views/splashscreen_page.dart';
 
 import '../../src/entrypoint/views/entrypoint.dart';
@@ -41,10 +42,7 @@ final GoRouter _router = GoRouter(
     //   path: '/orders',
     //   builder: (context, state) => const OrdersPage(),
     // ),
-    // GoRoute(
-    //   path: '/login',
-    //   builder: (context, state) => const LoginPage(),
-    // ),
+    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
     // GoRoute(
     //   path: '/register',
     //   builder: (context, state) => const RegistrationPage(),

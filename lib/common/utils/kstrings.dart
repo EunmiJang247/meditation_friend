@@ -1,6 +1,7 @@
 class AppText {
   // Jenny Add
   static const String kAppName = 'Meditation Friend App';
+  static const String kGetStarted = "Let's Get Started";
 
   static const String kCategory = 'Category';
   static const String kCategories = 'Categories';
