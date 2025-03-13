@@ -1,6 +1,5 @@
-# meditation_friend_app
-
-명상을 제공하는 앱
+# shopping
+쇼핑몰 서비스를 제공하는 앱
 
 ## Getting Started
 

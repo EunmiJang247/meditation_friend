@@ -13,7 +13,7 @@ final GoRouter _router = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
-    GoRoute(path: '/home', builder: (context, state) => const AppEntryPoint()),
+    GoRoute(path: '/home', builder: (context, state) => AppEntryPoint()),
     GoRoute(
       path: '/onboarding',
       builder: (context, state) => const OnboardingScreen(),
