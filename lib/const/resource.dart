@@ -32,6 +32,12 @@ class R {
   static const String ASSETS_IMAGES_SPLASHSCREEN_PNG =
       'assets/images/splashscreen.png';
 
+  static const String ASSETS_IMAGES_SPLASHSCREEN_DOTDOT_PNG =
+      'assets/images/dotdot_splash.png';
+
+  static const String ASSETS_IMAGES_ONBOARDING_PNG =
+      'assets/images/onboarding.png';
+
   /// ![preview](file:///Volumes/Transfer/Projects/fashion/assets/images/wishlist.png)
   static const String ASSETS_IMAGES_WISHLIST_PNG = 'assets/images/wishlist.png';
 }

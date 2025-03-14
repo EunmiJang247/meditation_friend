@@ -1,77 +1,121 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:meditation_friend_app/common/utils/kcolors.dart';
-import 'package:meditation_friend_app/src/cart/views/cart_screen.dart';
+import 'package:meditation_friend_app/src/mypage/views/mypage_screen.dart';
 import 'package:meditation_friend_app/src/home/views/home_screen.dart';
-import 'package:meditation_friend_app/src/profile/views/profile_screen.dart';
-import 'package:meditation_friend_app/src/wishlist/views/wishlist_screen.dart';
+import 'package:meditation_friend_app/src/settings/views/settings_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:meditation_friend_app/src/entrypoint/controllers/bottom_tab_notifier.dart';
 
 class AppEntryPoint extends StatelessWidget {
   AppEntryPoint({super.key});
-  // 여기에 네 개의 탭이 와야함
   List<Widget> pageList = [
     const HomePage(),
-    const WishlistPage(),
-    const CartPage(),
-    const ProfilePage(),
+    const SettingsPage(),
+    const MyPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          pageList[1],
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Theme(
-              data: Theme.of(context).copyWith(canvasColor: Kolors.kOffWhite),
-              child: BottomNavigationBar(
-                selectedFontSize: 12,
-                elevation: 0,
-                backgroundColor: Kolors.kOffWhite,
-                showSelectedLabels: true,
-                showUnselectedLabels: false,
-                unselectedIconTheme: const IconThemeData(color: Colors.black38),
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      AntDesign.home,
-                      color: Kolors.kPrimary,
-                      size: 24,
+    return Consumer<TabIndexNotifier>(
+      builder: (context, tabIndexNotifier, child) {
+        return Scaffold(
+          backgroundColor: Kolors.kSkyBlue,
+          body: SafeArea(
+            child: Stack(
+              children: [
+                pageList[tabIndexNotifier.index],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Theme(
+                    data: Theme.of(
+                      context,
+                    ).copyWith(canvasColor: Colors.yellow),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Kolors.kWhite,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: BottomNavigationBar(
+                          selectedFontSize: 12,
+                          elevation: 0,
+                          backgroundColor: Colors.transparent,
+                          showSelectedLabels: true,
+                          showUnselectedLabels: false,
+                          currentIndex: tabIndexNotifier.index,
+                          selectedItemColor: Kolors.kOrange,
+                          unselectedItemColor: Kolors.kGray,
+                          unselectedIconTheme: const IconThemeData(
+                            color: Kolors.kGray,
+                          ),
+                          onTap: (i) {
+                            tabIndexNotifier.setIndex(i);
+                          },
+                          items: [
+                            BottomNavigationBarItem(
+                              icon:
+                                  tabIndexNotifier.index == 0
+                                      ? const Icon(
+                                        MaterialCommunityIcons.home,
+                                        color: Kolors.kOrange,
+                                        size: 24,
+                                      )
+                                      : const Icon(
+                                        MaterialCommunityIcons.home,
+                                        color: Kolors.kGray,
+                                        size: 24,
+                                      ),
+                              label: "HOME",
+                            ),
+                            BottomNavigationBarItem(
+                              icon:
+                                  tabIndexNotifier.index == 1
+                                      ? const Icon(
+                                        MaterialCommunityIcons
+                                            .headphones_settings,
+                                        color: Kolors.kOrange,
+                                        size: 24,
+                                      )
+                                      : const Icon(
+                                        MaterialCommunityIcons
+                                            .headphones_settings,
+                                        color: Kolors.kGray,
+                                        size: 24,
+                                      ),
+                              label: "SETTINGS",
+                            ),
+                            BottomNavigationBarItem(
+                              icon:
+                                  tabIndexNotifier.index == 2
+                                      ? const Icon(
+                                        MaterialCommunityIcons.account,
+                                        color: Kolors.kOrange,
+                                        size: 24,
+                                      )
+                                      : const Icon(
+                                        MaterialCommunityIcons.account,
+                                        color: Kolors.kGray,
+                                        size: 24,
+                                      ),
+                              label: "MYPAGE",
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    label: "Home",
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      AntDesign.home,
-                      color: Kolors.kPrimary,
-                      size: 24,
-                    ),
-                    label: "Wishlist",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      AntDesign.home,
-                      color: Kolors.kPrimary,
-                      size: 24,
-                    ),
-                    label: "Cart",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      AntDesign.home,
-                      color: Kolors.kPrimary,
-                      size: 24,
-                    ),
-                    label: "Profile",
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

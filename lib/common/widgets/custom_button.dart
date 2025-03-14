@@ -31,11 +31,10 @@ class GradientBtn extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: btnWidth ?? ScreenUtil().screenWidth / 2,
-        height: btnHieght ?? 25.h,
+        height: btnHieght ?? 60.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius ?? 6),
-          color: btnColor ?? Kolors.kPrimaryLight,
-          border: Border.all(width: 0.5.h, color: borderColor ?? Kolors.kWhite),
+          borderRadius: BorderRadius.circular(radius ?? 30),
+          color: btnColor ?? Kolors.kOrange,
         ),
         child: Center(
           child: Padding(
@@ -43,9 +42,9 @@ class GradientBtn extends StatelessWidget {
             child: ReusableText(
               text: text,
               style: appStyle(
-                textSize ?? 13,
+                textSize ?? 18,
                 borderColor ?? Kolors.kWhite,
-                FontWeight.w500,
+                FontWeight.bold,
               ),
             ),
           ),

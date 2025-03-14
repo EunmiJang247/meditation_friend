@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_friend_app/common/services/storage.dart';
 import 'package:meditation_friend_app/common/utils/kcolors.dart';
 import 'package:meditation_friend_app/const/resource.dart';
+import 'package:meditation_friend_app/src/splashscreen/widgets/custom_loading.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,13 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigator() async {
-    await Future.delayed(const Duration(milliseconds: 2000), () {
-      // 3초 후
+    await Future.delayed(const Duration(milliseconds: 1500), () {
       if (Storage().getBool('firstOpen') == null) {
-        // 처음 방문한 유저라면 onboarding screen 으로
         GoRouter.of(context).go('/onboarding');
       } else {
-        // 아니라면 homescreen 으로
         GoRouter.of(context).go('/home');
       }
     });
@@ -34,13 +33,34 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Kolors.kWhite,
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage(R.ASSETS_IMAGES_SPLASHSCREEN_PNG),
+      backgroundColor: Kolors.kSkyBlue,
+      body: SafeArea(
+        child: Center(
+          child: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const EllipsisLoadingIndicatorCustom(),
+                  const SizedBox(height: 20),
+                  Image.asset(
+                    R.ASSETS_IMAGES_SPLASHSCREEN_PNG,
+                    width: ScreenUtil().screenWidth - 100,
+                  ),
+                  const SizedBox(height: 40),
+                ],
+              ),
+
+              Positioned(
+                bottom: 30,
+                left: 0,
+                child: Image.asset(
+                  R.ASSETS_IMAGES_SPLASHSCREEN_DOTDOT_PNG,
+                  width: 80,
+                ),
+              ),
+            ],
           ),
         ),
       ),
