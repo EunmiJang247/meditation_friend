@@ -38,6 +38,12 @@ class R {
   static const String ASSETS_IMAGES_ONBOARDING_PNG =
       'assets/images/onboarding.png';
 
+  static const String MUSICPLAYING = 'assets/images/music_playing_pic.png';
+
+  static const String ASSETS_MUSIC_BAR = 'assets/images/music_sound_bar.png';
+
+  static const String ASSETS_PLAY_BUTTON = 'assets/images/playbutton.png';
+
   /// ![preview](file:///Volumes/Transfer/Projects/fashion/assets/images/wishlist.png)
   static const String ASSETS_IMAGES_WISHLIST_PNG = 'assets/images/wishlist.png';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditation_friend_app/common/services/storage.dart';
 import 'package:meditation_friend_app/common/utils/kcolors.dart';
 import 'package:meditation_friend_app/common/widgets/app_style.dart';
 import 'package:meditation_friend_app/common/widgets/custom_button.dart';
@@ -66,6 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       GradientBtn(
                         text: "시작하기",
                         onTap: () {
+                          Storage().setBool('firstOpen', true);
                           GoRouter.of(context).go('/home');
                         },
                       ),

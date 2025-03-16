@@ -1,31 +1,11 @@
-enum QueryType {
-  all,
-  popular,
-  unisex,
-  men,
-  women,
-  kids
-}
+enum QueryType { all, popular, unisex, men, women, kids }
 
-enum WishlistToggle {
-  retrieve,
-  delete,
-  add,
-}
+enum WishlistToggle { retrieve, delete, add }
 
-enum FetchOrdersTypes {
-  pending,
-  delivered,
-  cancelled,
-}
+enum FetchOrdersTypes { pending, delivered, cancelled }
 
-enum ReloadCount {
-  delete,
-  reload,
-  update,
-}
+enum ReloadCount { delete, reload, update }
 
-enum NotificationCount {
-  update,
-  reload,
-}
+enum NotificationCount { update, reload }
+
+enum PlayingType { playing, pause, loading }

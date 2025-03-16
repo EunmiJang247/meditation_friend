@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_friend_app/src/auth/views/login_screen.dart';
+import 'package:meditation_friend_app/src/music/screens/music_playing.dart';
 import 'package:meditation_friend_app/src/onboarding/views/onboarding_screen.dart';
 import 'package:meditation_friend_app/src/splashscreen/views/splashscreen_page.dart';
 
@@ -19,9 +20,18 @@ final GoRouter _router = GoRouter(
       builder: (context, state) => const OnboardingScreen(),
     ),
     // GoRoute(
-    //   path: '/review',
-    //   builder: (context, state) => const ReviewsPage(),
+    //   path: '/music/:id',
+    //   builder: (BuildContext context, GoRouterState state) {
+    //     final musicId = state.pathParameters['id'];
+    //     return MusicPlaying();
+    //   },
     // ),
+    GoRoute(
+      path: '/music',
+      builder: (BuildContext context, GoRouterState state) {
+        return const MusicPlaying();
+      },
+    ),
     // GoRoute(
     //   path: '/policy',
     //   builder: (context, state) => const PolicyPage(),
