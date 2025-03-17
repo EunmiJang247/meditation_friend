@@ -9,8 +9,12 @@ import 'package:meditation_friend_app/src/home/contollers/meditation_music_notif
 import 'package:meditation_friend_app/src/splashscreen/views/splashscreen_page.dart';
 import 'package:provider/provider.dart';
 import 'package:meditation_friend_app/src/entrypoint/controllers/bottom_tab_notifier.dart';
+import 'package:intl/date_symbol_data_local.dart'; // 날짜 데이터 초기화
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('ko_KR', null); // 한국어 로캘 데이터 초기화
+
   WidgetsFlutterBinding.ensureInitialized();
   // env 파일을 돌려줌
   await dotenv.load(fileName: Environment.fileName);

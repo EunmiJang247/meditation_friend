@@ -36,7 +36,7 @@ class StartMeditationPlayerBtn extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ReusableText(
-                text: '명상 시작하기',
+                text: '오늘의 명상 시작하기',
                 style: appStyle(16, Kolors.kPrimary, FontWeight.normal),
               ),
               const SizedBox(height: 16),

@@ -3,17 +3,12 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:meditation_friend_app/common/utils/kcolors.dart';
 import 'package:meditation_friend_app/src/mypage/views/mypage_screen.dart';
 import 'package:meditation_friend_app/src/home/views/home_screen.dart';
-import 'package:meditation_friend_app/src/settings/views/settings_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:meditation_friend_app/src/entrypoint/controllers/bottom_tab_notifier.dart';
 
 class AppEntryPoint extends StatelessWidget {
   AppEntryPoint({super.key});
-  List<Widget> pageList = [
-    const HomePage(),
-    const SettingsPage(),
-    const MyPage(),
-  ];
+  List<Widget> pageList = [const HomePage(), const MyPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -76,23 +71,6 @@ class AppEntryPoint extends StatelessWidget {
                             BottomNavigationBarItem(
                               icon:
                                   tabIndexNotifier.index == 1
-                                      ? const Icon(
-                                        MaterialCommunityIcons
-                                            .headphones_settings,
-                                        color: Kolors.kOrange,
-                                        size: 24,
-                                      )
-                                      : const Icon(
-                                        MaterialCommunityIcons
-                                            .headphones_settings,
-                                        color: Kolors.kGray,
-                                        size: 24,
-                                      ),
-                              label: "SETTINGS",
-                            ),
-                            BottomNavigationBarItem(
-                              icon:
-                                  tabIndexNotifier.index == 2
                                       ? const Icon(
                                         MaterialCommunityIcons.account,
                                         color: Kolors.kOrange,

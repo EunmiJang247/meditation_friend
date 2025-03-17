@@ -19,6 +19,13 @@ final GoRouter _router = GoRouter(
       path: '/onboarding',
       builder: (context, state) => const OnboardingScreen(),
     ),
+    GoRoute(
+      path: '/music',
+      builder: (BuildContext context, GoRouterState state) {
+        return const MusicPlaying();
+      },
+    ),
+    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
     // GoRoute(
     //   path: '/music/:id',
     //   builder: (BuildContext context, GoRouterState state) {
@@ -26,12 +33,6 @@ final GoRouter _router = GoRouter(
     //     return MusicPlaying();
     //   },
     // ),
-    GoRoute(
-      path: '/music',
-      builder: (BuildContext context, GoRouterState state) {
-        return const MusicPlaying();
-      },
-    ),
     // GoRoute(
     //   path: '/policy',
     //   builder: (context, state) => const PolicyPage(),
@@ -52,7 +53,6 @@ final GoRouter _router = GoRouter(
     //   path: '/orders',
     //   builder: (context, state) => const OrdersPage(),
     // ),
-    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
     // GoRoute(
     //   path: '/register',
     //   builder: (context, state) => const RegistrationPage(),
