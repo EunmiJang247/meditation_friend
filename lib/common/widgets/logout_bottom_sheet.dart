@@ -52,7 +52,7 @@ Future<dynamic> logoutBottomSheet(BuildContext context) {
                   GradientBtn(
                     text: "Yes, Logout",
                     onTap: () {
-                      // Storage().removeKey('accessToken');
+                      // Storage().removeKey('sessionId');
                       // context.read<TabIndexNotifier>().tabIndex = 0;
                       // context.go("/home");
                       // context.pop();

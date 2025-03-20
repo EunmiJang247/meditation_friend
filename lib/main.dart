@@ -5,6 +5,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:meditation_friend_app/common/utils/app_routes.dart';
 import 'package:meditation_friend_app/common/utils/environment.dart';
 import 'package:meditation_friend_app/common/utils/kstrings.dart';
+import 'package:meditation_friend_app/src/auth/contollers/auth_notifier.dart';
+import 'package:meditation_friend_app/src/auth/contollers/password_notifier.dart';
 import 'package:meditation_friend_app/src/home/contollers/meditation_music_notifier.dart';
 import 'package:meditation_friend_app/src/splashscreen/views/splashscreen_page.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +29,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => TabIndexNotifier()),
         ChangeNotifierProvider(create: (_) => MeditationMusicNotifier()),
+        ChangeNotifierProvider(create: (_) => AuthNotifier()),
+        ChangeNotifierProvider(create: (_) => PasswordNotifier()),
       ],
       child: const MyApp(),
     ),
