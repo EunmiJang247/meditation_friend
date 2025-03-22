@@ -1,3 +1,4 @@
+// 입장 시 자동 재생
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:just_audio/just_audio.dart';
@@ -18,10 +19,30 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
   late String currentUrl = "";
   late String musicUrl;
 
+  Future<void> autoPlay() async {
+    if (currentUrl != musicUrl) {
+      // 새로운 음악이거나 첫 재생이면 setUrl 실행
+      print('🎵 새로운 음악 로드: ${musicUrl}');
+      await _audioPlayer.setUrl(musicUrl);
+      currentUrl = musicUrl;
+    } else {
+      print('▶️ 이전 음악 그대로 재생');
+    }
+
+    try {
+      await _audioPlayer.play(); // play()를 실행하고 대기
+    } catch (e) {
+      print('❌ play() 실행 오류 발생: $e');
+      throw e; // 예외를 던져서 문제를 명확히 확인
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     musicUrl = widget.musicUrl;
+
+    autoPlay();
 
     // 🎵 플레이어 상태 변화 감지 (한 번만 실행)
     _audioPlayer.playerStateStream.listen((state) {
@@ -74,7 +95,6 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
                     print(currentUrl);
                     print(musicUrl);
                     if (currentUrl != musicUrl) {
-                      // 새로운 음악이거나 첫 재생이면 setUrl 실행
                       print('🎵 새로운 음악 로드: ${musicUrl}');
                       await _audioPlayer.setUrl(musicUrl);
                       currentUrl = musicUrl;
@@ -83,10 +103,10 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
                     }
 
                     try {
-                      await _audioPlayer.play(); // play()를 실행하고 대기
+                      await _audioPlayer.play();
                     } catch (e) {
                       print('❌ play() 실행 오류 발생: $e');
-                      throw e; // 예외를 던져서 문제를 명확히 확인
+                      throw e;
                     }
                   } catch (e) {
                     print('❌ 음악 재생 오류: $e');
