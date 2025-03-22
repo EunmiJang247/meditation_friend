@@ -5,26 +5,14 @@ import 'package:meditation_friend_app/common/utils/kcolors.dart';
 import 'package:meditation_friend_app/common/widgets/app_style.dart';
 import 'package:meditation_friend_app/common/widgets/reusable_text.dart';
 import 'package:meditation_friend_app/const/resource.dart';
-import 'dart:math';
-import 'package:provider/provider.dart';
-import 'package:meditation_friend_app/src/home/contollers/meditation_music_notifier.dart';
-import 'package:meditation_friend_app/const/constants.dart';
 
 class StartMeditationPlayerBtn extends StatelessWidget {
   const StartMeditationPlayerBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final random = Random();
     return GestureDetector(
       onTap: () {
-        final randomMusic =
-            meditationMusics[random.nextInt(meditationMusics.length)];
-        final meditationMusicNotifier = Provider.of<MeditationMusicNotifier>(
-          context,
-          listen: false,
-        );
-        meditationMusicNotifier.setMusic(randomMusic);
         context.push('/music');
       },
       child: Card(

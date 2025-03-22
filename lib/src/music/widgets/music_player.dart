@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:meditation_friend_app/common/utils/enums.dart';
-import 'package:meditation_friend_app/src/home/contollers/meditation_music_notifier.dart';
+import 'package:meditation_friend_app/src/music/contollers/meditation_music_notifier.dart';
 import 'package:provider/provider.dart';
 
 class MusicPlayerWidget extends StatefulWidget {
-  const MusicPlayerWidget({super.key});
+  const MusicPlayerWidget({super.key, required this.musicUrl});
+  final String musicUrl; // null 허용 X, 필수 값
 
   @override
   _MusicPlayerWidgetState createState() => _MusicPlayerWidgetState();
@@ -14,10 +15,34 @@ class MusicPlayerWidget extends StatefulWidget {
 
 class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
   final AudioPlayer _audioPlayer = AudioPlayer();
-  String? currentUrl; // 현재 재생 중인 음악 URL
-  // bool isPlaying = false;
-  // bool isLoading = false;
-  // String? currentUrl;
+  late String currentUrl = "";
+  late String musicUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    musicUrl = widget.musicUrl;
+
+    // 🎵 플레이어 상태 변화 감지 (한 번만 실행)
+    _audioPlayer.playerStateStream.listen((state) {
+      print('🎵 플레이어 상태 변경: ${state.playing}, ${state.processingState}');
+
+      if (state.playing && state.processingState == ProcessingState.ready) {
+        context.read<MeditationMusicNotifier>().setPlayingType(
+          PlayingType.playing,
+        );
+      } else if (!state.playing &&
+          state.processingState == ProcessingState.ready) {
+        context.read<MeditationMusicNotifier>().setPlayingType(
+          PlayingType.pause,
+        );
+      } else if (state.processingState == ProcessingState.loading) {
+        context.read<MeditationMusicNotifier>().setPlayingType(
+          PlayingType.loading,
+        );
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -27,20 +52,8 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    @override
-    void initState() {
-      super.initState();
-    }
-
     return Consumer<MeditationMusicNotifier>(
       builder: (context, musicNotifier, child) {
-        print('호출!');
-        print(musicNotifier.playingStatus);
-        final music = musicNotifier.music;
-        if (music == null) {
-          return Center(child: Text('현재 음악이 설정되지 않았습니다.'));
-        }
-
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -58,28 +71,23 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
               IconButton(
                 onPressed: () async {
                   try {
-                    musicNotifier.setPlayingType(PlayingType.loading);
-                    // await _audioPlayer.setUrl(
-                    //   musicNotifier.music?.musicUrl ?? '',
-                    // );
-                    if (currentUrl != music.musicUrl) {
+                    print(currentUrl);
+                    print(musicUrl);
+                    if (currentUrl != musicUrl) {
                       // 새로운 음악이거나 첫 재생이면 setUrl 실행
-                      print('🎵 새로운 음악 로드: ${music.musicUrl}');
-                      await _audioPlayer.setUrl(music.musicUrl);
-                      currentUrl = music.musicUrl;
+                      print('🎵 새로운 음악 로드: ${musicUrl}');
+                      await _audioPlayer.setUrl(musicUrl);
+                      currentUrl = musicUrl;
                     } else {
                       print('▶️ 이전 음악 그대로 재생');
                     }
 
-                    _audioPlayer
-                        .play()
-                        .then((_) {
-                          musicNotifier.setPlayingType(PlayingType.playing);
-                        })
-                        .catchError((e) {
-                          print('❌ play() 실패: $e');
-                        });
-                    musicNotifier.setPlayingType(PlayingType.playing);
+                    try {
+                      await _audioPlayer.play(); // play()를 실행하고 대기
+                    } catch (e) {
+                      print('❌ play() 실행 오류 발생: $e');
+                      throw e; // 예외를 던져서 문제를 명확히 확인
+                    }
                   } catch (e) {
                     print('❌ 음악 재생 오류: $e');
                   }
@@ -88,15 +96,14 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
               ),
             // 로딩 버튼
             if (musicNotifier.playingStatus == PlayingType.loading)
-              Icon(MaterialIcons.warning),
+              // Icon(MaterialIcons.warning),
+              const CircularProgressIndicator(),
             // 멈춤 버튼
             if (musicNotifier.playingStatus == PlayingType.playing)
               IconButton(
                 onPressed: () async {
                   try {
-                    musicNotifier.setPlayingType(PlayingType.loading);
                     await _audioPlayer.pause();
-                    musicNotifier.setPlayingType(PlayingType.pause);
                   } catch (e) {
                     print('❌ pause() 실행 중 오류 발생: $e');
                   }
