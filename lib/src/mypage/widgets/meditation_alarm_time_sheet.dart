@@ -42,11 +42,7 @@ Future<dynamic> meditationAlramTimeBottomSheet(BuildContext context) {
                   );
                 },
               ),
-              CustomTimePicker(
-                // onTimeChanged: (selectedTime) {
-                //   print("선택된 시간: ${selectedTime.hour}:${selectedTime.minute}");
-                // },
-              ),
+              CustomTimePicker(),
             ],
           ),
         ),

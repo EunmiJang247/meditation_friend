@@ -26,8 +26,6 @@ Future<dynamic> meditationKindBottomSheet(BuildContext context) {
                 style: appStyle(18.0, Kolors.kPrimary, FontWeight.bold),
               ),
               SizedBox(height: 10.h),
-
-              // Information Section
               Text(
                 '선호하는 명상 종류를 알려주세요',
                 textAlign: TextAlign.center,

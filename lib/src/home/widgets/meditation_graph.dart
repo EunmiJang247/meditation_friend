@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meditation_friend_app/common/utils/kcolors.dart';
 
 class AttendanceCheck extends StatelessWidget {
@@ -29,41 +30,46 @@ class AttendanceCheck extends StatelessWidget {
       now.add(Duration(days: 3)),
     ];
 
-    return Card(
-      color: Kolors.kWhite,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...dates.map((date) {
-              bool isPresent = attendanceList.any(
-                (attendanceDate) =>
-                    attendanceDate.year == date.year &&
-                    attendanceDate.month == date.month &&
-                    attendanceDate.day == date.day,
-              );
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Column(
-                  children: [
-                    Icon(
-                      isPresent
-                          ? MaterialIcons.sentiment_very_satisfied
-                          : (date == now
-                              ? MaterialIcons.sentiment_satisfied
-                              : MaterialIcons.sentiment_neutral),
-                      color:
-                          isPresent
-                              ? const Color.fromARGB(255, 78, 91, 235)
-                              : (date == now ? Kolors.kOrange : null),
-                    ),
-                    Text(getDayOfWeek(date)),
-                  ],
-                ),
-              );
-            }).toList(),
-          ],
+    return GestureDetector(
+      onTap: () {
+        context.push('/attendance');
+      },
+      child: Card(
+        color: Kolors.kWhite,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ...dates.map((date) {
+                bool isPresent = attendanceList.any(
+                  (attendanceDate) =>
+                      attendanceDate.year == date.year &&
+                      attendanceDate.month == date.month &&
+                      attendanceDate.day == date.day,
+                );
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    children: [
+                      Icon(
+                        isPresent
+                            ? MaterialIcons.sentiment_very_satisfied
+                            : (date == now
+                                ? MaterialIcons.sentiment_satisfied
+                                : MaterialIcons.sentiment_neutral),
+                        color:
+                            isPresent
+                                ? const Color.fromARGB(255, 78, 91, 235)
+                                : (date == now ? Kolors.kOrange : null),
+                      ),
+                      Text(getDayOfWeek(date)),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
         ),
       ),
     );
