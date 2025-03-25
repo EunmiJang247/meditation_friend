@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:meditation_friend_app/common/utils/kcolors.dart';
 
 class WeekDaySelectButtons extends StatefulWidget {
-  final Function(int) onChanged; // 선택된 비트마스크 값을 전달하는 콜백
+  final Function(int) onChanged;
 
-  const WeekDaySelectButtons({Key? key, required this.onChanged})
-    : super(key: key);
+  const WeekDaySelectButtons({super.key, required this.onChanged});
 
   @override
   _WeekDaySelectButtonsState createState() => _WeekDaySelectButtonsState();
 }
 
 class _WeekDaySelectButtonsState extends State<WeekDaySelectButtons> {
-  int selectedDays = 0; // 비트마스크 (0000000)
+  int selectedDays = 0;
 
   final List<String> days = ["월", "화", "수", "목", "금", "토", "일"];
 

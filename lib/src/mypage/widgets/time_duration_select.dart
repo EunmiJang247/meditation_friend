@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 
-class CustomTimePicker extends StatefulWidget {
-  const CustomTimePicker({super.key});
+class TimeDurationSelect extends StatefulWidget {
+  const TimeDurationSelect({super.key});
 
   @override
-  _CustomTimePickerState createState() => _CustomTimePickerState();
+  _TimeDurationSelectState createState() => _TimeDurationSelectState();
 }
 
-class _CustomTimePickerState extends State<CustomTimePicker> {
-  int selectedHour = 12; // 기본 시
-  int selectedMinute = 30; // 기본 분
+class _TimeDurationSelectState extends State<TimeDurationSelect> {
+  int selectedMinute = 10; // 기본 분
 
   final List<int> hours = List.generate(24, (index) => index); // 0~23 시간 리스트
   final List<int> minutes = List.generate(60, (index) => index); // 0~59 분 리스트
 
-  late FixedExtentScrollController _hourController;
   late FixedExtentScrollController _minuteController;
 
   @override
   void initState() {
     super.initState();
-    // 시간과 분을 초기화한 후 컨트롤러에 설정
-    _hourController = FixedExtentScrollController(initialItem: selectedHour);
     _minuteController = FixedExtentScrollController(
       initialItem: selectedMinute,
     );
@@ -29,7 +25,6 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
 
   @override
   void dispose() {
-    _hourController.dispose();
     _minuteController.dispose();
     super.dispose();
   }
@@ -39,30 +34,12 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(height: 20),
-        Text(
-          '선택된 시간: $selectedHour 시 $selectedMinute 분',
-          style: const TextStyle(fontSize: 20),
-        ),
+        const SizedBox(height: 10),
+        Text('$selectedMinute 분', style: const TextStyle(fontSize: 20)),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 시 스크롤
-            _buildWheelPicker(
-              list: hours,
-              controller: _hourController,
-              onSelectedItemChanged: (index) {
-                setState(() {
-                  selectedHour = index;
-                });
-              },
-            ),
-            const SizedBox(width: 4),
-            const Text(
-              "시", // "시" 텍스트
-              style: TextStyle(fontSize: 18),
-            ),
             const SizedBox(width: 10),
             // 분 스크롤
             _buildWheelPicker(

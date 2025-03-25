@@ -69,7 +69,7 @@ class MyPage extends StatelessWidget {
                           onTap: () => meditationKindBottomSheet(context),
                         ),
                         ProfileTileWidget(
-                          title: "선호하는 시간(duration)",
+                          title: "명상 길이 설정",
                           leading: MaterialIcons.access_time,
                           onTap: () => meditationDurationBottomSheet(context),
                         ),
