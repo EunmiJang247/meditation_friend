@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
           SizedBox(height: 10),
           StartMeditationPlayerBtn(),
           SizedBox(height: 10),
-          LineChartSample2(),
+          AttendanceCheck(),
           SizedBox(height: 100),
         ],
       ),

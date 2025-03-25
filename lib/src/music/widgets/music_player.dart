@@ -34,7 +34,7 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
       await _audioPlayer.play(); // play()를 실행하고 대기
     } catch (e) {
       print('❌ play() 실행 오류 발생: $e');
-      throw e; // 예외를 던져서 문제를 명확히 확인
+      throw e;
     }
   }
 
@@ -106,10 +106,9 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
                 // 라이크 버튼
                 IconButton(
                   icon: Icon(MaterialIcons.favorite_outline, size: 48),
-                  onPressed:
-                      () => () {
-                        //
-                      },
+                  onPressed: () {
+                    print('좋아요 버튼 클릭!');
+                  },
                 ),
 
                 // 재생 버튼
@@ -141,7 +140,6 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
                   ),
                 // 로딩 버튼
                 if (musicNotifier.playingStatus == PlayingType.loading)
-                  // Icon(MaterialIcons.warning),
                   const CircularProgressIndicator(),
                 // 멈춤 버튼
                 if (musicNotifier.playingStatus == PlayingType.playing)
@@ -159,7 +157,7 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
                 IconButton(
                   icon: const Icon(Icons.skip_next, size: 48),
                   onPressed: () {
-                    //
+                    print('다음곡 버튼 클릭!');
                   },
                 ),
               ],

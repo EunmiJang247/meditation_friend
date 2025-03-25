@@ -70,7 +70,7 @@ class MyPage extends StatelessWidget {
                         ),
                         ProfileTileWidget(
                           title: "명상 길이 설정",
-                          leading: MaterialIcons.access_time,
+                          leading: MaterialIcons.timelapse,
                           onTap: () => meditationDurationBottomSheet(context),
                         ),
                         ProfileTileWidget(
