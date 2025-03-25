@@ -2,7 +2,6 @@ import 'package:meditation_friend_app/common/utils/kcolors.dart';
 import 'package:meditation_friend_app/common/widgets/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:meditation_friend_app/src/mypage/widgets/gender_select_widget.dart';
 
 Future<dynamic> meditationGenderBottomSheet(BuildContext context) {
