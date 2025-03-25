@@ -12,6 +12,7 @@ import 'package:meditation_friend_app/src/splashscreen/views/splashscreen_page.d
 import 'package:provider/provider.dart';
 import 'package:meditation_friend_app/src/entrypoint/controllers/bottom_tab_notifier.dart';
 import 'package:intl/date_symbol_data_local.dart'; // 날짜 데이터 초기화
+import 'package:flutter_localizations/flutter_localizations.dart'; // 로케일 지원 추가
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +56,16 @@ class MyApp extends StatelessWidget {
           title: AppText.kAppName,
           theme: ThemeData(useMaterial3: true),
           routerConfig: router,
+          locale: const Locale('ko', 'KR'),
+          supportedLocales: const [
+            Locale('ko', 'KR'), // 한국어
+            Locale('en', 'US'), // 영어 (필요할 경우 추가)
+          ],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate, // iOS 스타일 지원
+          ],
         );
       },
       child: const SplashScreen(),

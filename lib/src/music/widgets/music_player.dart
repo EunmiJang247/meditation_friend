@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:meditation_friend_app/common/utils/enums.dart';
+import 'package:meditation_friend_app/common/utils/kcolors.dart';
 import 'package:meditation_friend_app/src/music/contollers/meditation_music_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -61,6 +62,10 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
         context.read<MeditationMusicNotifier>().setPlayingType(
           PlayingType.loading,
         );
+      } else if (state.processingState == ProcessingState.buffering) {
+        context.read<MeditationMusicNotifier>().setPlayingType(
+          PlayingType.loading,
+        );
       }
     });
   }
@@ -75,67 +80,89 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
   Widget build(BuildContext context) {
     return Consumer<MeditationMusicNotifier>(
       builder: (context, musicNotifier, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        return Column(
           children: [
-            // 라이크 버튼
-            IconButton(
-              icon: Icon(MaterialIcons.favorite_outline, size: 48),
-              onPressed:
-                  () => () {
+            StreamBuilder<Duration>(
+              stream: _audioPlayer.positionStream, // 🔹 현재 재생 위치 스트림
+              builder: (context, snapshot) {
+                final duration = snapshot.data ?? Duration.zero;
+                final totalDuration = _audioPlayer.duration ?? Duration.zero;
+
+                return Slider(
+                  value: duration.inSeconds.toDouble(),
+                  min: 0,
+                  max: totalDuration.inSeconds.toDouble(),
+                  onChanged: (value) async {
+                    await _audioPlayer.seek(Duration(seconds: value.toInt()));
+                  },
+                  activeColor: Kolors.kOrange, // 🔹 재생중인 바 색상 (여기서 색상 변경)
+                  inactiveColor: Colors.grey,
+                );
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // 라이크 버튼
+                IconButton(
+                  icon: Icon(MaterialIcons.favorite_outline, size: 48),
+                  onPressed:
+                      () => () {
+                        //
+                      },
+                ),
+
+                // 재생 버튼
+                if (musicNotifier.playingStatus == PlayingType.pause)
+                  IconButton(
+                    onPressed: () async {
+                      try {
+                        print(currentUrl);
+                        print(musicUrl);
+                        if (currentUrl != musicUrl) {
+                          print('🎵 새로운 음악 로드: ${musicUrl}');
+                          await _audioPlayer.setUrl(musicUrl);
+                          currentUrl = musicUrl;
+                        } else {
+                          print('▶️ 이전 음악 그대로 재생');
+                        }
+
+                        try {
+                          await _audioPlayer.play();
+                        } catch (e) {
+                          print('❌ play() 실행 오류 발생: $e');
+                          throw e;
+                        }
+                      } catch (e) {
+                        print('❌ 음악 재생 오류: $e');
+                      }
+                    },
+                    icon: Icon(MaterialIcons.play_arrow, size: 50),
+                  ),
+                // 로딩 버튼
+                if (musicNotifier.playingStatus == PlayingType.loading)
+                  // Icon(MaterialIcons.warning),
+                  const CircularProgressIndicator(),
+                // 멈춤 버튼
+                if (musicNotifier.playingStatus == PlayingType.playing)
+                  IconButton(
+                    onPressed: () async {
+                      try {
+                        await _audioPlayer.pause();
+                      } catch (e) {
+                        print('❌ pause() 실행 중 오류 발생: $e');
+                      }
+                    },
+                    icon: Icon(MaterialIcons.pause, size: 50),
+                  ),
+                // 다음곡 버튼
+                IconButton(
+                  icon: const Icon(Icons.skip_next, size: 48),
+                  onPressed: () {
                     //
                   },
-            ),
-
-            // 재생 버튼
-            if (musicNotifier.playingStatus == PlayingType.pause)
-              IconButton(
-                onPressed: () async {
-                  try {
-                    print(currentUrl);
-                    print(musicUrl);
-                    if (currentUrl != musicUrl) {
-                      print('🎵 새로운 음악 로드: ${musicUrl}');
-                      await _audioPlayer.setUrl(musicUrl);
-                      currentUrl = musicUrl;
-                    } else {
-                      print('▶️ 이전 음악 그대로 재생');
-                    }
-
-                    try {
-                      await _audioPlayer.play();
-                    } catch (e) {
-                      print('❌ play() 실행 오류 발생: $e');
-                      throw e;
-                    }
-                  } catch (e) {
-                    print('❌ 음악 재생 오류: $e');
-                  }
-                },
-                icon: Icon(MaterialIcons.play_arrow, size: 50),
-              ),
-            // 로딩 버튼
-            if (musicNotifier.playingStatus == PlayingType.loading)
-              // Icon(MaterialIcons.warning),
-              const CircularProgressIndicator(),
-            // 멈춤 버튼
-            if (musicNotifier.playingStatus == PlayingType.playing)
-              IconButton(
-                onPressed: () async {
-                  try {
-                    await _audioPlayer.pause();
-                  } catch (e) {
-                    print('❌ pause() 실행 중 오류 발생: $e');
-                  }
-                },
-                icon: Icon(MaterialIcons.pause, size: 50),
-              ),
-            // 다음곡 버튼
-            IconButton(
-              icon: const Icon(Icons.skip_next, size: 48),
-              onPressed: () {
-                //
-              },
+                ),
+              ],
             ),
           ],
         );

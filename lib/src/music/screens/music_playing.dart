@@ -7,10 +7,8 @@ import 'package:meditation_friend_app/common/widgets/app_style.dart';
 import 'package:meditation_friend_app/common/widgets/reusable_text.dart';
 import 'package:meditation_friend_app/common/widgets/shimmers/list_shimmer.dart';
 import 'package:meditation_friend_app/const/resource.dart';
-import 'package:meditation_friend_app/src/music/contollers/meditation_music_notifier.dart';
 import 'package:meditation_friend_app/src/music/hook/fetch_random_music.dart';
 import 'package:meditation_friend_app/src/music/widgets/music_player.dart';
-import 'package:provider/provider.dart';
 
 class MusicPlaying extends HookWidget {
   const MusicPlaying({super.key});
