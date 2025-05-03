@@ -38,90 +38,98 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Kolors.kSkyBlue,
-      appBar: AppBar(
+    return GestureDetector(
+      // 이 코드가 실행되면 현재 포커스(예: TextField 입력 상태)가 해제되고, 키보드가 내려가.
+      onTap: () {
+        FocusScope.of(context).unfocus(); // 🔽 키보드 내리기
+      },
+      child: Scaffold(
         backgroundColor: Kolors.kSkyBlue,
-        elevation: 0,
-        leading: AppBackButton(
-          onTap: () {
-            if (context.mounted) {
-              context.read<TabIndexNotifier>().setIndex(0);
-              context.go('/home');
-            }
-          },
+        appBar: AppBar(
+          backgroundColor: Kolors.kSkyBlue,
+          elevation: 0,
+          leading: AppBackButton(
+            onTap: () {
+              if (context.mounted) {
+                context.read<TabIndexNotifier>().setIndex(0);
+                context.go('/home');
+              }
+            },
+          ),
         ),
-      ),
-      body: ListView(
-        children: [
-          const SizedBox(height: 160),
-          Text(
-            '명상친구',
-            textAlign: TextAlign.center,
-            style: appStyle(24, Kolors.kPrimary, FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          Text(
-            '같이 해요. 마음챙김 명상.',
-            textAlign: TextAlign.center,
-            style: appStyle(13, Kolors.kGray, FontWeight.normal),
-          ),
-          SizedBox(height: 25),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
-              children: [
-                EmailTextField(
-                  radius: 25,
-                  focusNode: _passwordNode,
-                  hintText: "Username",
-                  controller: _usernameController,
-                  prefixIcon: const Icon(
-                    CupertinoIcons.profile_circled,
-                    size: 20,
-                    color: Kolors.kGray,
-                  ),
-                  keyboardType: TextInputType.name,
-                  onEditingComplete: () {
-                    FocusScope.of(context).requestFocus(_passwordNode);
-                  },
-                ),
-                SizedBox(height: 25),
-                PasswordField(
-                  controller: _passwordController,
-                  focusNode: _passwordNode,
-                  radius: 25,
-                ),
-                SizedBox(height: 25),
-                context.watch<AuthNotifier>().isLoading
-                    ? const Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Kolors.kPrimary,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Kolors.kWhite,
-                        ),
-                      ),
-                    )
-                    : GradientBtn(
-                      onTap: () {
-                        LoginModel model = LoginModel(
-                          password: _passwordController.text,
-                          username: _usernameController.text,
-                        );
-
-                        String data = loginModelToJson(model);
-                        // print(data); // {"password":"1234","username":"admin"}
-                        context.read<AuthNotifier>().loginFunc(data, context);
-                      },
-                      text: "시작하기",
-                      btnWidth: ScreenUtil().screenWidth,
-                      btnHieght: 40,
-                      radius: 20,
-                    ),
-              ],
+        body: ListView(
+          children: [
+            const SizedBox(height: 160),
+            Text(
+              '명상친구',
+              textAlign: TextAlign.center,
+              style: appStyle(24, Kolors.kPrimary, FontWeight.bold),
             ),
-          ),
-        ],
+            const SizedBox(height: 10),
+            Text(
+              '같이 해요. 마음챙김 명상.',
+              textAlign: TextAlign.center,
+              style: appStyle(13, Kolors.kGray, FontWeight.normal),
+            ),
+            const SizedBox(height: 25),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                children: [
+                  EmailTextField(
+                    radius: 25,
+                    focusNode: _passwordNode,
+                    hintText: "Username",
+                    controller: _usernameController,
+                    prefixIcon: const Icon(
+                      CupertinoIcons.profile_circled,
+                      size: 20,
+                      color: Kolors.kGray,
+                    ),
+                    keyboardType: TextInputType.name,
+                    onEditingComplete: () {
+                      FocusScope.of(context).requestFocus(_passwordNode);
+                    },
+                  ),
+                  const SizedBox(height: 25),
+                  PasswordField(
+                    controller: _passwordController,
+                    focusNode: _passwordNode,
+                    radius: 25,
+                  ),
+                  const SizedBox(height: 25),
+                  context.watch<AuthNotifier>().isLoading
+                      ? const Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Kolors.kPrimary,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Kolors.kWhite,
+                          ),
+                        ),
+                      )
+                      : GradientBtn(
+                        onTap: () {
+                          print('Login button pressed');
+                          LoginModel model = LoginModel(
+                            password: _passwordController.text,
+                            username: _usernameController.text,
+                          );
+
+                          String data = loginModelToJson(model);
+                          print(data);
+                          // {"password":"1234","username":"admin"}
+                          context.read<AuthNotifier>().loginFunc(data, context);
+                        },
+                        text: "로그인",
+                        btnWidth: ScreenUtil().screenWidth,
+                        btnHieght: 40,
+                        radius: 20,
+                      ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

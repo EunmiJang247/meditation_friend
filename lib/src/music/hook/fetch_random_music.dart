@@ -18,8 +18,10 @@ FetchMeditationMusics fetchMeditatioMusic() {
       Uri url = Uri.parse(
         '${Environment.appBaseUrl}/api/meditation-muics/random',
       );
+      print("Response: ${Environment.appBaseUrl}");
 
       final response = await http.get(url);
+      print("Response 는요!: ${response.body}"); // -> 여기부터 안오는데?
       if (response.statusCode == 200) {
         final decodedString = utf8.decode(response.bodyBytes);
         final music = meditationMusicFromJson(decodedString);
@@ -29,6 +31,7 @@ FetchMeditationMusics fetchMeditatioMusic() {
       }
     } catch (e) {
       error.value = e.toString();
+      print("Error occurred: $e");
     } finally {
       isLoading.value = false;
     }
@@ -36,7 +39,7 @@ FetchMeditationMusics fetchMeditatioMusic() {
 
   useEffect(() {
     fetchData();
-    return;
+    return null;
   }, const []);
 
   void refetch() {

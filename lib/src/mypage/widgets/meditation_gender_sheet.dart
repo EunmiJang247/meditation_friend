@@ -22,7 +22,7 @@ Future<dynamic> meditationGenderBottomSheet(BuildContext context) {
             children: [
               Text(
                 '음성 성별 선택',
-                style: appStyle(18.0, Kolors.kPrimary, FontWeight.bold),
+                style: appStyle(18, Kolors.kPrimary, FontWeight.bold),
               ),
               SizedBox(height: 10.h),
               GenderSelectButtons(),

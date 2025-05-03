@@ -151,7 +151,7 @@ class AuthNotifier with ChangeNotifier {
         return profileModelFromJson(data);
       } else {
         // 데이터가 null이거나 비어있을 경우 처리 (예: 로그인 화면으로 리다이렉션 등)
-        print('User data is not available or empty.');
+        // print('User data is not available or empty.');
         return null;
       }
     }

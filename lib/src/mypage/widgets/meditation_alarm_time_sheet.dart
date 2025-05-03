@@ -24,7 +24,7 @@ Future<dynamic> meditationAlramTimeBottomSheet(BuildContext context) {
             children: [
               Text(
                 '알람 시간',
-                style: appStyle(18.0, Kolors.kPrimary, FontWeight.bold),
+                style: appStyle(18, Kolors.kPrimary, FontWeight.bold),
               ),
               SizedBox(height: 10.h),
 
@@ -32,7 +32,7 @@ Future<dynamic> meditationAlramTimeBottomSheet(BuildContext context) {
               Text(
                 '해당 시간에 알람을 드려요',
                 textAlign: TextAlign.center,
-                style: appStyle(16.0, Kolors.kDark, FontWeight.normal),
+                style: appStyle(16, Kolors.kDark, FontWeight.normal),
               ),
               SizedBox(height: 15.h),
               WeekDaySelectButtons(

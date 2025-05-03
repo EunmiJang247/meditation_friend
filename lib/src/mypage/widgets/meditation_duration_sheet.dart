@@ -23,7 +23,7 @@ Future<dynamic> meditationDurationBottomSheet(BuildContext context) {
             children: [
               Text(
                 '영상길이 선택',
-                style: appStyle(18.0, Kolors.kPrimary, FontWeight.bold),
+                style: appStyle(18, Kolors.kPrimary, FontWeight.bold),
               ),
               SizedBox(height: 10.h),
 
@@ -31,7 +31,7 @@ Future<dynamic> meditationDurationBottomSheet(BuildContext context) {
               Text(
                 '선호하시는 영상 길이를 설정해주세요',
                 textAlign: TextAlign.center,
-                style: appStyle(16.0, Kolors.kDark, FontWeight.normal),
+                style: appStyle(16, Kolors.kDark, FontWeight.normal),
               ),
               SizedBox(height: 15.h),
               TimeDurationSelect(),

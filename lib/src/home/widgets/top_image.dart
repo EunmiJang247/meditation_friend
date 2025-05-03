@@ -9,8 +9,8 @@ class TopImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
+    return SizedBox(
+      height: ScreenUtil().screenHeight * 0.3,
       width: ScreenUtil().screenWidth,
       child: Stack(
         children: [
@@ -19,7 +19,7 @@ class TopImage extends StatelessWidget {
             right: -50,
             child: Image.asset(
               R.ASSETS_IMAGES_SPLASHSCREEN_PNG,
-              height: 280,
+              height: 250,
               fit: BoxFit.contain,
             ),
           ),
@@ -28,7 +28,7 @@ class TopImage extends StatelessWidget {
             left: 50,
             child: Image.asset(
               R.ASSETS_IMAGES_SPLASHSCREEN_DOTDOT_PNG,
-              height: 100,
+              height: 80,
               fit: BoxFit.contain,
             ),
           ),

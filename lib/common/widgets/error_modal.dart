@@ -14,7 +14,7 @@ void showErrorPopup(
       return CupertinoActionSheet(
         title: Text(
           title ?? 'Error',
-          style: appStyle(18.0, Kolors.kGrayLight, FontWeight.bold),
+          style: appStyle(18, Kolors.kGrayLight, FontWeight.bold),
         ),
         message: Text(errorMessage, style: const TextStyle(fontSize: 16.0)),
         actions: <Widget>[

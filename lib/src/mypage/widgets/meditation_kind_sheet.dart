@@ -23,13 +23,13 @@ Future<dynamic> meditationKindBottomSheet(BuildContext context) {
             children: [
               Text(
                 '명상종류 선택',
-                style: appStyle(18.0, Kolors.kPrimary, FontWeight.bold),
+                style: appStyle(18, Kolors.kPrimary, FontWeight.bold),
               ),
               SizedBox(height: 10.h),
               Text(
                 '선호하는 명상 종류를 알려주세요',
                 textAlign: TextAlign.center,
-                style: appStyle(16.0, Kolors.kDark, FontWeight.normal),
+                style: appStyle(16, Kolors.kDark, FontWeight.normal),
               ),
               SizedBox(height: 15.h),
               MeditationKindSelectWidget(),

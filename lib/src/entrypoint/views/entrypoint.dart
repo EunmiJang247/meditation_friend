@@ -12,6 +12,8 @@ class AppEntryPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Consumer<TabIndexNotifier>(
       builder: (context, tabIndexNotifier, child) {
         return Scaffold(
@@ -20,75 +22,76 @@ class AppEntryPoint extends StatelessWidget {
             child: Stack(
               children: [
                 pageList[tabIndexNotifier.index],
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Theme(
-                    data: Theme.of(
-                      context,
-                    ).copyWith(canvasColor: Colors.yellow),
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Kolors.kWhite,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: BottomNavigationBar(
-                          selectedFontSize: 12,
-                          elevation: 0,
-                          backgroundColor: Colors.transparent,
-                          showSelectedLabels: true,
-                          showUnselectedLabels: false,
-                          currentIndex: tabIndexNotifier.index,
-                          selectedItemColor: Kolors.kOrange,
-                          unselectedItemColor: Kolors.kGray,
-                          unselectedIconTheme: const IconThemeData(
-                            color: Kolors.kGray,
+                if (!isKeyboardVisible)
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Theme(
+                      data: Theme.of(
+                        context,
+                      ).copyWith(canvasColor: Colors.yellow),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Kolors.kOrange,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: BottomNavigationBar(
+                            selectedFontSize: 12,
+                            elevation: 0,
+                            backgroundColor: Colors.transparent,
+                            showSelectedLabels: true,
+                            showUnselectedLabels: false,
+                            currentIndex: tabIndexNotifier.index,
+                            selectedItemColor: Kolors.kWhite,
+                            unselectedItemColor: Kolors.kWhite,
+                            unselectedIconTheme: const IconThemeData(
+                              color: Kolors.kWhite,
+                            ),
+                            onTap: (i) {
+                              tabIndexNotifier.setIndex(i);
+                            },
+                            items: [
+                              BottomNavigationBarItem(
+                                icon:
+                                    tabIndexNotifier.index == 0
+                                        ? const Icon(
+                                          MaterialCommunityIcons.home,
+                                          color: Kolors.kWhite,
+                                          size: 24,
+                                        )
+                                        : const Icon(
+                                          MaterialCommunityIcons.home,
+                                          color: Kolors.kWhite,
+                                          size: 24,
+                                        ),
+                                label: "HOME",
+                              ),
+                              BottomNavigationBarItem(
+                                icon:
+                                    tabIndexNotifier.index == 1
+                                        ? const Icon(
+                                          MaterialCommunityIcons.account,
+                                          color: Kolors.kWhite,
+                                          size: 24,
+                                        )
+                                        : const Icon(
+                                          MaterialCommunityIcons.account,
+                                          color: Kolors.kWhite,
+                                          size: 24,
+                                        ),
+                                label: "MYPAGE",
+                              ),
+                            ],
                           ),
-                          onTap: (i) {
-                            tabIndexNotifier.setIndex(i);
-                          },
-                          items: [
-                            BottomNavigationBarItem(
-                              icon:
-                                  tabIndexNotifier.index == 0
-                                      ? const Icon(
-                                        MaterialCommunityIcons.home,
-                                        color: Kolors.kOrange,
-                                        size: 24,
-                                      )
-                                      : const Icon(
-                                        MaterialCommunityIcons.home,
-                                        color: Kolors.kGray,
-                                        size: 24,
-                                      ),
-                              label: "HOME",
-                            ),
-                            BottomNavigationBarItem(
-                              icon:
-                                  tabIndexNotifier.index == 1
-                                      ? const Icon(
-                                        MaterialCommunityIcons.account,
-                                        color: Kolors.kOrange,
-                                        size: 24,
-                                      )
-                                      : const Icon(
-                                        MaterialCommunityIcons.account,
-                                        color: Kolors.kGray,
-                                        size: 24,
-                                      ),
-                              label: "MYPAGE",
-                            ),
-                          ],
                         ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),

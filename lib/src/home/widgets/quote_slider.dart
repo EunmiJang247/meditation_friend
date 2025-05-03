@@ -41,7 +41,7 @@ class QuoteSlider extends StatelessWidget {
                             Text(
                               quotes[i].quote,
                               style: appStyle(
-                                14.sp,
+                                14,
                                 Kolors.kDark,
                                 FontWeight.normal,
                               ),
@@ -53,7 +53,7 @@ class QuoteSlider extends StatelessWidget {
                             Text(
                               '- ${quotes[i].author}',
                               style: appStyle(
-                                10.sp,
+                                10,
                                 Kolors.kDark,
                                 FontWeight.w500,
                               ),

@@ -15,8 +15,8 @@ class HomePage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         children: const [
+          SizedBox(height: 20),
           TopImage(),
-          SizedBox(height: 4),
           QuoteSlider(),
           SizedBox(height: 10),
           StartMeditationPlayerBtn(),

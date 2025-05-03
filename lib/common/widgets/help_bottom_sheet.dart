@@ -22,7 +22,7 @@ Future<dynamic> showHelpCenterBottomSheet(BuildContext context) {
             children: [
               Text(
                 'Fashion App Help Center',
-                style: appStyle(18.0, Kolors.kPrimary, FontWeight.bold),
+                style: appStyle(18, Kolors.kPrimary, FontWeight.bold),
               ),
               SizedBox(height: 10.h),
 
@@ -30,7 +30,7 @@ Future<dynamic> showHelpCenterBottomSheet(BuildContext context) {
               Text(
                 'We\'re here to help! Find answers to frequently asked questions or contact our support team.',
                 textAlign: TextAlign.center,
-                style: appStyle(16.0, Kolors.kDark, FontWeight.normal),
+                style: appStyle(16, Kolors.kDark, FontWeight.normal),
               ),
               SizedBox(height: 15.h),
 

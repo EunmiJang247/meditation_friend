@@ -13,7 +13,7 @@ class StartMeditationPlayerBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/music');
+        GoRouter.of(context).push('/music');
       },
       child: Card(
         color: Kolors.kWhite,
@@ -30,10 +30,10 @@ class StartMeditationPlayerBtn extends StatelessWidget {
               const SizedBox(height: 16),
               Image.asset(
                 R.ASSETS_MUSIC_BAR,
-                width: ScreenUtil().screenWidth - 80,
+                width: ScreenUtil().screenWidth - 100,
               ),
               const SizedBox(height: 16),
-              Image.asset(R.ASSETS_PLAY_BUTTON, width: 180),
+              Image.asset(R.ASSETS_PLAY_BUTTON, width: 150),
             ],
           ),
         ),

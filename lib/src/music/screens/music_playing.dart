@@ -5,7 +5,6 @@ import 'package:meditation_friend_app/common/services/storage.dart';
 import 'package:meditation_friend_app/common/utils/kcolors.dart';
 import 'package:meditation_friend_app/common/widgets/app_style.dart';
 import 'package:meditation_friend_app/common/widgets/reusable_text.dart';
-import 'package:meditation_friend_app/common/widgets/shimmers/list_shimmer.dart';
 import 'package:meditation_friend_app/const/resource.dart';
 import 'package:meditation_friend_app/src/music/hook/fetch_random_music.dart';
 import 'package:meditation_friend_app/src/music/widgets/music_player.dart';
@@ -22,12 +21,26 @@ class MusicPlaying extends HookWidget {
     final error = results.error;
 
     if (isLoading) {
-      return const Scaffold(body: ListShimmer());
+      return Container(
+        color: Kolors.kSkyBlue,
+        child: const Center(
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: Kolors.kOrange,
+            ),
+          ),
+        ),
+      );
     }
 
     if (meditationMusics.isEmpty) {
       return Center(child: Text('음악이 없어요!'));
     }
+
+    print("여기에요! http://192.168.0.22:85${meditationMusics[0].musicUrl}");
 
     return Scaffold(
       backgroundColor: Kolors.kSkyBlue,
@@ -74,7 +87,10 @@ class MusicPlaying extends HookWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
-              MusicPlayerWidget(musicUrl: meditationMusics[0].musicUrl),
+              MusicPlayerWidget(
+                musicUrl:
+                    "http://192.168.0.22:85${meditationMusics[0].musicUrl}",
+              ),
             ],
           ),
         ),
