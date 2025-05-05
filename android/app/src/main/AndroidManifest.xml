@@ -1,4 +1,13 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.moraesoft.meditation_friend_app"
+    >
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 앱이 인터넷에 접근할 수 있도록 허용 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- 앱이 포그라운드 서비스를 실행할 수 있도록 허용 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 앱이 CPU가 절전 모드로 들어가지 않도록 막는 권한 -->
     <application
         android:usesCleartextTraffic="true"
         android:label="meditation_friend_app"
@@ -13,10 +22,6 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-            <!-- Specifies an Android theme to apply to this Activity as soon as
-                 the Android process has started. This theme is visible to the user
-                 while the Flutter UI initializes. After that, this theme continues
-                 to determine the Window background behind the Flutter UI. -->
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
@@ -26,6 +31,27 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- Jenny Add
+        stopWithTask="false" 이면 🔥 앱 꺼질 때까지 서비스 유지
+        사용할 서비스 클래스의 경로
+        외부 앱(예: Android 시스템)이 이 서비스를 사용할 수 있도록 허용
+        이 서비스가 미디어 재생용 포그라운드 서비스임을 명시
+        android:stopWithTask="false": 앱이 종료돼도 이 서비스는 자동 종료되지 않아요.
+        tools:ignore="Instantiatable": 이 서비스는 Flutter 엔진에 의해 인스턴스화되므로, Android Lint에서 경고를 무시하도록 설정합니다.
+        시스템이 이 서비스를 미디어 브라우저로 인식하도록
+        -->
+        <service
+            android:name="com.ryanheise.audioservice.AudioService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback"
+            android:stopWithTask="false" 
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
+
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

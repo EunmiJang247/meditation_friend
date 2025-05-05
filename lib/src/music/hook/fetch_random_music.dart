@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:http/http.dart' as http;
 import 'package:meditation_friend_app/common/utils/environment.dart';
@@ -29,11 +28,10 @@ FetchMeditationMusics fetchMeditatioMusic() {
       } else {
         print("Failed to fetch data. Status code: ${response.statusCode}");
       }
+      isLoading.value = false;
     } catch (e) {
       error.value = e.toString();
       print("Error occurred: $e");
-    } finally {
-      isLoading.value = false;
     }
   }
 
@@ -42,15 +40,10 @@ FetchMeditationMusics fetchMeditatioMusic() {
     return null;
   }, const []);
 
-  void refetch() {
-    isLoading.value = true;
-    fetchData();
-  }
-
   return FetchMeditationMusics(
     meditationMusics: meditationMusics.value,
     isLoading: isLoading.value,
     error: error.value,
-    refetch: refetch,
+    refetch: fetchData,
   );
 }

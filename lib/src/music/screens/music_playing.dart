@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meditation_friend_app/common/services/storage.dart';
 import 'package:meditation_friend_app/common/utils/kcolors.dart';
@@ -10,6 +11,7 @@ import 'package:meditation_friend_app/src/music/hook/fetch_random_music.dart';
 import 'package:meditation_friend_app/src/music/widgets/music_player.dart';
 
 class MusicPlaying extends HookWidget {
+  // HookWidget이므로, 내부에서 useState, useEffect 등을 사용할 수 있음.
   const MusicPlaying({super.key});
 
   @override
@@ -19,6 +21,7 @@ class MusicPlaying extends HookWidget {
     final meditationMusics = results.meditationMusics;
     final isLoading = results.isLoading;
     final error = results.error;
+    final api_base_url = dotenv.env['API_BASE_URL'];
 
     if (isLoading) {
       return Container(
@@ -40,8 +43,6 @@ class MusicPlaying extends HookWidget {
       return Center(child: Text('음악이 없어요!'));
     }
 
-    print("여기에요! http://192.168.0.22:85${meditationMusics[0].musicUrl}");
-
     return Scaffold(
       backgroundColor: Kolors.kSkyBlue,
       appBar: AppBar(
@@ -54,44 +55,45 @@ class MusicPlaying extends HookWidget {
           },
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (meditationMusics[0].imageUrl != "")
-                CachedNetworkImage(
-                  imageUrl: meditationMusics[0].imageUrl,
-                  fit: BoxFit.cover,
-                  width: 300,
-                  height: 300,
-                )
-              else
-                Image.asset(
-                  R.MUSICPLAYING,
-                  width: 300,
-                  height: 300,
-                  fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (meditationMusics[0].imageUrl != "")
+                  CachedNetworkImage(
+                    imageUrl: meditationMusics[0].imageUrl,
+                    fit: BoxFit.cover,
+                    width: 300,
+                    height: 300,
+                  )
+                else
+                  Image.asset(
+                    R.MUSICPLAYING,
+                    width: 300,
+                    height: 300,
+                    fit: BoxFit.cover,
+                  ),
+                const SizedBox(height: 24),
+                ReusableText(
+                  text: meditationMusics[0].title,
+                  style: appStyle(16, Kolors.kDark, FontWeight.bold),
                 ),
-              const SizedBox(height: 24),
-              ReusableText(
-                text: meditationMusics[0].title,
-                style: appStyle(16, Kolors.kDark, FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                meditationMusics[0].description,
-                style: appStyle(14, Kolors.kDark, FontWeight.normal),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
-              MusicPlayerWidget(
-                musicUrl:
-                    "http://192.168.0.22:85${meditationMusics[0].musicUrl}",
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  meditationMusics[0].description,
+                  style: appStyle(14, Kolors.kDark, FontWeight.normal),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
+                MusicPlayerWidget(
+                  musicUrl: "${api_base_url}${meditationMusics[0].musicUrl}",
+                ),
+              ],
+            ),
           ),
         ),
       ),

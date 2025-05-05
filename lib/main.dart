@@ -17,19 +17,17 @@ import 'package:flutter_localizations/flutter_localizations.dart'; // 로케일 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('ko_KR', null); // 한국어 로캘 데이터 초기화
-
-  WidgetsFlutterBinding.ensureInitialized();
-  // env 파일을 돌려줌
-  await dotenv.load(fileName: Environment.fileName);
-
-  // 로컬 스토리지에 접근
-  GetStorage.init();
+  await dotenv.load(fileName: Environment.fileName); // env 파일을 돌려줌
+  GetStorage.init(); // 로컬 스토리지에 접근
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => TabIndexNotifier()),
-        ChangeNotifierProvider(create: (_) => MeditationMusicNotifier()),
+        ChangeNotifierProvider(
+          create: (_) => MeditationMusicNotifier(),
+          lazy: false, // 앱 시작 시 바로 초기화해서 dispose 보장
+        ), // ← 여기서 생성자 호출됨 → _init() 실행
         ChangeNotifierProvider(create: (_) => AuthNotifier()),
         ChangeNotifierProvider(create: (_) => PasswordNotifier()),
       ],
@@ -38,8 +36,37 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.detached) {
+      // 화면이 꺼지지 않고 앱이 완전히 종료될 때만 음악 멈춤
+      final musicNotifier = Provider.of<MeditationMusicNotifier>(
+        context,
+        listen: false,
+      );
+      musicNotifier.stop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
